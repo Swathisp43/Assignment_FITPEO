@@ -34,17 +34,20 @@ public class TC_001_ValReccReimbursment {
 		js.executeScript("arguments[0].scrollIntoView();", calculator);
 
 		//4) Adjust the Slider: Get the slider dimensions and position
-		
-		  WebElement sliderHandle =
-		  driver.findElement(By.xpath("//span[contains(@class, 'MuiSlider-thumb')]"));		  
-		  Actions action = new Actions(driver);
-		  action.dragAndDropBy(sliderHandle,-94,0).perform();		  
-	//	  action.dragAndDropBy(sliderHandle,124,0).perform();
+		WebElement slider_input = driver.findElement(By.xpath("//input[@type='number']"));
+		WebElement slider1 = driver.findElement(By.className("MuiInputBase-input"));
+		slider1.clear();
+		WebElement sliderHandle =
+		driver.findElement(By.xpath("//span[contains(@class, 'MuiSlider-thumb')]"));		  
+		Actions action = new Actions(driver);
+		action.dragAndDropBy(sliderHandle,-94,0).perform();		  
+		//  action.dragAndDropBy(sliderHandle,124,0).perform();
+		slider_input.sendKeys("820");
 		Thread.sleep(5000); 
 		
 		// 5) Update the Text Field:		  		  
-		WebElement slider_input = driver.findElement(By.xpath("//input[@type='number']"));
-		//action.dragAndDropBy(sliderHandle,-94,0).perform();
+		slider_input.sendKeys(Keys.BACK_SPACE);
+		slider_input.sendKeys(Keys.BACK_SPACE);
 		slider_input.sendKeys(Keys.BACK_SPACE);
 		slider_input.sendKeys("560");
 		
@@ -59,7 +62,6 @@ public class TC_001_ValReccReimbursment {
           
           //7)Select CPT Codes:
  		action.dragAndDropBy(sliderHandle,-94,0).perform();	
- 		slider_input.sendKeys(Keys.BACK_SPACE);
  		slider_input.sendKeys("820");
  		
           ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", slider_input);
@@ -77,7 +79,6 @@ public class TC_001_ValReccReimbursment {
           WebElement totalReimbursementHeader = driver.findElement(By.xpath("//p[@class='MuiTypography-root MuiTypography-body1 inter css-hocx5c'][normalize-space()='$110700']"));
           String expectedReimbursement = "$110700";
           String actualReimbursement = totalReimbursementHeader.getText();
-          System.out.println("actualReimbursement:"+ actualReimbursement);
 
           if (expectedReimbursement.equals(actualReimbursement)) {
               System.out.println("Total Recurring Reimbursement is correctly displayed as $110700.");
@@ -85,10 +86,11 @@ public class TC_001_ValReccReimbursment {
               System.out.println("Total Recurring Reimbursement is not displayed correctly.");
           }
           
+          driver.quit();
 		}
        finally {        
         }
-      driver.quit();
+     
           
 	}
 }
